@@ -3,8 +3,8 @@
 #define variables
 POSTGRE_VER=10
 JAVA_VER=8
-CONTAINER_NAME=postgreben
-
+CONTAINER_NAME=postgre
+CONTAINER_IMAGE=postgreben
 
 # check OS
 
@@ -13,12 +13,13 @@ CONTAINER_NAME=postgreben
 # check status docker???
 
 # build container postgreUbuntu, checks no necessary
-
-docker build -t postgretit:$POSTGRE_VER --build-arg POSTGRE_VER=$POSTGRE_VER -f postgreUbuntuDocfile .
-
+set +x
+docker build -t $CONTAINER_IMAGE:$POSTGRE_VER --build-arg POSTGRE_VER=$POSTGRE_VER -f postgreUbuntuDocfile .
+# docker build -t postgreben:ver --build-arg POSTGRE_VER=10 -f postgreUbuntuDocfile .
 
 ###add check
 ###volumes???
 # run container
 
-docker run  --restart=unless-stopped --name=$CONTAINER_NAME  postgretit:$POSTGRE_VER 
+#docker rm $CONTAINER_NAME 
+docker run  -d --restart=unless-stopped --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER 
