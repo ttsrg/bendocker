@@ -20,6 +20,13 @@ docker build -t $CONTAINER_IMAGE:$POSTGRE_VER --build-arg POSTGRE_VER=$POSTGRE_V
 ###add check
 ###volumes???
 # run container
+### ports?
 
 #docker rm $CONTAINER_NAME 
-docker run  -d --restart=unless-stopped --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER 
+
+### if net
+#docker network create gerrit-net
+docker rm -f $CONTAINER_NAME
+#docker run  -d --restart=always --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER 
+#docker run  -d  --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER 
+docker run  -d  -p 5555:5432 --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER

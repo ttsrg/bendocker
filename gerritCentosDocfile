@@ -1,0 +1,34 @@
+FROM  centos:7.6.1810
+
+RUN  yum -y update && yum install -y java-1.8.0-openjdk git wget &&\
+   yum clean all
+COPY gerritCentosDocfile /
+RUN adduser gerrit
+USER gerrit
+WORKDIR  /home/gerrit/
+RUN    wget -O gerrit.war  https://gerrit-releases.storage.googleapis.com/gerrit-3.0.0.war &>/dev/null &&\
+   java -jar gerrit.war init --batch -d gerrit/ &&\
+   rm -rf gerrit.war &&\
+   gerrit/bin/gerrit.sh stop && id
+#   gerrit/bin/gerrit.sh status  
+#   ls -la
+
+#RUN  gerrit/bin/gerrit.sh status
+#SHELL ["/bin/bash", "-lc", "gerrit/bin/gerrit.sh status"]
+
+RUN id
+
+#RUN gerrit/bin/gerrit.sh start && gerrit/bin/gerrit.sh stop 
+COPY files/gerrit.config gerrit/etc/
+COPY files/secure.config gerrit/etc/
+USER root
+RUN chown -R gerrit. gerrit/
+
+
+USER gerrit
+#ONBUILD
+CMD id
+#VOLUm
+#RUN ls -la gerrit/bin
+#ENTRYPOINT ["/home/gerrit/gerrit/bin/gerrit.sh"]
+#CMD ["restart"]

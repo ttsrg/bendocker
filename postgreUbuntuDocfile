@@ -8,6 +8,7 @@ echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' >> /etc/apt
  apt-get update && \ 
  apt-get install -y postgresql-$POSTGRE_VER postgresql-client-$POSTGRE_VER postgresql-contrib-$POSTGRE_VER
 #apt-get install -y postgresql-10 postgresql-client-10 postgresql-contrib-10
+COPY postgreUbuntuDocfile /
 USER postgres
 RUN  /etc/init.d/postgresql start &&\
    psql --command "CREATE USER gerrit WITH SUPERUSER PASSWORD 'gerrit';" &&\
@@ -16,12 +17,13 @@ RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$POSTGRE_VER/main/
 RUN echo "listen_addresses='*'" >> /etc/postgresql/$POSTGRE_VER/main/postgresql.conf
 EXPOSE 5432
 #RUN echo "ver----- $POSTGRE_VER"
-#ENV  POSTGRE=$POSTGRE_VER
+ENV  POSTGREENV_VER=$POSTGRE_VER
 #RUN echo $POSTGRE
 
 VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
 #CMD ["/usr/lib/postgresql/"\${POSTGRE_VER}/bin/postgres"", "-D", "/var/lib/postgresql/${POSTGRE_VER}/main", "-c", "config_file=/etc/postgresql/$POSTGRE_VER/main/postgresql.conf"]
 
 ### need resolve and explain that....
-CMD ["/usr/lib/postgresql/10/bin/postgres", "-D", "/var/lib/postgresql/10/main", "-c", "config_file=/etc/postgresql/10/main/postgresql.conf"]
+#CMD ["/usr/lib/postgresql/10/bin/postgres", "-D", "/var/lib/postgresql/10/main", "-c", "config_file=/etc/postgresql/10/main/postgresql.conf"]
+CMD /usr/lib/postgresql/$POSTGREENV_VER/bin/postgres -D /var/lib/postgresql/$POSTGREENV_VER/main -c  config_file=/etc/postgresql/$POSTGREENV_VER/main/postgresql.conf
 
