@@ -27,8 +27,8 @@ RUN chown -R gerrit. gerrit/
 
 USER gerrit
 #ONBUILD
-CMD id
+#CMD id
 #VOLUm
 #RUN ls -la gerrit/bin
-#ENTRYPOINT ["/home/gerrit/gerrit/bin/gerrit.sh"]
-#CMD ["restart"]
+ENTRYPOINT ["/home/gerrit/gerrit/bin/gerrit.sh"]
+CMD ["restart"]
