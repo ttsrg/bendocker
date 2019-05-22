@@ -6,29 +6,36 @@ COPY gerritCentosDocfile /
 RUN adduser gerrit
 USER gerrit
 WORKDIR  /home/gerrit/
-RUN    wget -O gerrit.war  https://gerrit-releases.storage.googleapis.com/gerrit-3.0.0.war &>/dev/null &&\
+
+RUN  mkdir -p gerrit/etc && touch gerrit/etc/gerrit.config &&\
+   wget -O gerrit.war  https://gerrit-releases.storage.googleapis.com/gerrit-3.0.0.war &>/dev/null &&\
    java -jar gerrit.war init --batch -d gerrit/ &&\
    rm -rf gerrit.war &&\
-   gerrit/bin/gerrit.sh stop && id
-#   gerrit/bin/gerrit.sh status  
-#   ls -la
+   gerrit/bin/gerrit.sh stop
 
 #RUN  gerrit/bin/gerrit.sh status
 #SHELL ["/bin/bash", "-lc", "gerrit/bin/gerrit.sh status"]
 
-RUN id
 
 #RUN gerrit/bin/gerrit.sh start && gerrit/bin/gerrit.sh stop 
-COPY files/gerrit.config gerrit/etc/
-COPY files/secure.config gerrit/etc/
-USER root
-RUN chown -R gerrit. gerrit/
+
+#COPY files/gerrit.config gerrit/etc/
+#COPY files/secure.config gerrit/etc/
+#USER root
+#RUN chown -R gerrit. gerrit/
+
+ADD --chown=gerrit files/gerrit.config gerrit/etc/
+COPY  --chown=gerrit files/secure.config gerrit/etc/
 
 
+
+EXPOSE 8080
 USER gerrit
+
 #ONBUILD
 #CMD id
 #VOLUm
 #RUN ls -la gerrit/bin
+VOLUME ["gerrit/git", "gerrit/index", "gerrit/cache", "gerrit/etc"]
 ENTRYPOINT ["/home/gerrit/gerrit/bin/gerrit.sh"]
-CMD ["restart"]
+CMD ["run"]

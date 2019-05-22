@@ -23,4 +23,4 @@ docker build -t $CONTAINER_IMAGE  -f gerritCentosDocfile .
 #docker rm $CONTAINER_NAME 
 docker rm -f $CONTAINER_NAME
 #docker run  -d --restart=unless-stopped --name=$CONTAINER_NAME  $CONTAINER_IMAGE
-docker run  -d --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE
+docker run  -d -p 8080:8080  --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE

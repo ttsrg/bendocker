@@ -23,10 +23,11 @@ docker build -t $CONTAINER_IMAGE:$POSTGRE_VER --build-arg POSTGRE_VER=$POSTGRE_V
 ### ports?
 
 #docker rm $CONTAINER_NAME 
+mkdir -p volumes/{gerrit, postgre}
 
 ### if net
 #docker network create gerrit-net
 docker rm -f $CONTAINER_NAME
 #docker run  -d --restart=always --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER 
 #docker run  -d  --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER 
-docker run  -d  -p 5555:5432 --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER
+docker run  -d   --network=gerrit-net --name=$CONTAINER_NAME  $CONTAINER_IMAGE:$POSTGRE_VER

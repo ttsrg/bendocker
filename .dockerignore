@@ -1,1 +1,5 @@
 #dockerignore
+*
+!*Docfile
+!files/
+#!gerritCentosDocfile
