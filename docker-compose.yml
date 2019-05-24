@@ -1,0 +1,24 @@
+version: "3.7" 
+services:
+  db:
+    build:
+#docker build -t $CONTAINER_IMAGE:$POSTGRE_VER --build-arg POSTGRE_VER=$POSTGRE_VER 
+      context: .
+      dockerfile: postgreUbuntuDocfile
+      args: 
+        - POSTGRE_VER=10
+    restart: always
+#    ports: '5432:5432'
+#    scale: 3
+#    privileged: true
+    volumes:
+#      - postvol:/var/lib/postgresql
+      - postgrevol:/var/lib/postgresql
+#
+#     - /sys/fs/cgroup
+
+
+
+
+volumes:
+  postgrevol:

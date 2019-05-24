@@ -22,8 +22,8 @@ EXPOSE 5432
 ENV  POSTGREENV_VER=$POSTGRE_VER
 #RUN echo $POSTGRE
 
-#VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
-VOLUME  ["$(pwd)/etc/postgresql", "$(pwd)/var/log/postgresql", "$(pwd)/var/lib/postgresql"]
+VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+#VOLUME  ["$(pwd)/etc/postgresql", "$(pwd)/var/log/postgresql", "$(pwd)/var/lib/postgresql"]
 
 ### need resolve and explain that....
 #CMD ["/usr/lib/postgresql/10/bin/postgres", "-D", "/var/lib/postgresql/10/main", "-c", "config_file=/etc/postgresql/10/main/postgresql.conf"]
