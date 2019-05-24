@@ -9,6 +9,8 @@ echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' >> /etc/apt
  apt-get install -y postgresql-$POSTGRE_VER postgresql-client-$POSTGRE_VER postgresql-contrib-$POSTGRE_VER
 #apt-get install -y postgresql-10 postgresql-client-10 postgresql-contrib-10
 COPY postgreUbuntuDocfile /
+#COPY ./postgreUbuntuDocfile /docker-entrypoint-initdb.d/
+#COPY ./test.sql /docker-entrypoint-initdb.d/
 USER postgres
 RUN  /etc/init.d/postgresql start &&\
    psql --command "CREATE USER gerrit WITH SUPERUSER PASSWORD 'gerrit';" &&\
@@ -20,8 +22,8 @@ EXPOSE 5432
 ENV  POSTGREENV_VER=$POSTGRE_VER
 #RUN echo $POSTGRE
 
-VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
-#CMD ["/usr/lib/postgresql/"\${POSTGRE_VER}/bin/postgres"", "-D", "/var/lib/postgresql/${POSTGRE_VER}/main", "-c", "config_file=/etc/postgresql/$POSTGRE_VER/main/postgresql.conf"]
+#VOLUME  ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+VOLUME  ["$(pwd)/etc/postgresql", "$(pwd)/var/log/postgresql", "$(pwd)/var/lib/postgresql"]
 
 ### need resolve and explain that....
 #CMD ["/usr/lib/postgresql/10/bin/postgres", "-D", "/var/lib/postgresql/10/main", "-c", "config_file=/etc/postgresql/10/main/postgresql.conf"]
