@@ -8,11 +8,8 @@ RUN apt-get update && \
     cd /tmp/nginx-$NGINX_VER && ./configure --without-http_rewrite_module --without-http_gzip_module &&\
     make && make install && rm -rf /tmp/nginx-$NGINX_VER /nginx.tar.gz  &&\
     apt-get -y  autoremove && apt-get -y  autoclean
- 
-    
 
 COPY nginxUbuntuDocfile /
-
 
 #RUN ln -sf /dev/stdout /var/log/nginx/access.log \
 #&& ln -sf /dev/stderr /var/log/nginx/error.log
@@ -21,7 +18,7 @@ RUN ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
 
 
 EXPOSE 80
-
+#LABEL labe=ben
 
 STOPSIGNAL SIGTERM
 
