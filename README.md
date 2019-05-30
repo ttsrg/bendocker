@@ -1,17 +1,23 @@
 # bendocker
-
-creating stack nginx/postgre/java_app by docker for testing
-
-
-startstack.sh  is auto starting all necessaries scripts
-
-APP is available at - http://localhost
+Creating stack nginx/postgre/java_app by docker for testing
 
 
-You may manual start in next sequence:
-1 -  1startpostgre.sh
-2 -  2startgerrit.sh
-3 -  3startnginx.sh
+## Usage
+```bash
+Script 'startstack.sh'   autostarts all necessaries scripts
+```
 
 
-To remove all  please execute rmALL.sh
+
+>Also you may  start scripts manual in next sequence:
+* > 1startpostgre.sh
+* >  2startgerrit.sh
+* >  3startnginx.sh
+
+
+**After deploy  APP will  available at - [gerrit](http://localhost)**
+
+
+```bash
+To remove all changes  -  please execute 'rmALL.sh'
+```
